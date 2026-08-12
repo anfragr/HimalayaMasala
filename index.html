@@ -587,7 +587,7 @@ a{color:inherit;text-decoration:none}
               <div class="field"><label for="r_phone">Telefon</label><input id="r_phone" type="tel" name="Telefon" placeholder="Für Rückfragen"></div>
             </div>
             <div class="field"><label for="r_msg">Anmerkung</label><textarea id="r_msg" name="Anmerkung" rows="2" placeholder="Allergien, Kinderstuhl, Anlass …"></textarea></div>
-            <label class="resv__consent"><input type="checkbox" name="Datenschutz akzeptiert" value="Ja" required> Ich habe die <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Daten zur Bearbeitung der Reservierung einverstanden.</label>
+            <label class="resv__consent"><input type="checkbox" name="Datenschutz akzeptiert" value="Ja" required> <span>Ich habe die <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Daten zur Bearbeitung der Reservierung einverstanden.</span></label>
             <button class="btn" type="submit">Reservierung anfragen</button>
             <p class="resv__note">Wir melden uns zur Bestätigung, die Reservierung ist erst mit unserer Rückmeldung fix.</p>
           </form>
@@ -712,7 +712,8 @@ a{color:inherit;text-decoration:none}
     if(btn){btn.disabled=true;btn.textContent='Wird gesendet …';}
     var body=new URLSearchParams(new FormData(f)).toString();
     fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
-      .then(function(){
+      .then(function(r){
+        if(!r.ok) throw new Error('HTTP '+r.status);
         f.innerHTML='<div class="resv__done"><b>Danke!</b>Deine Reservierungsanfrage ist bei uns angekommen, wir melden uns so schnell wie möglich zur Bestätigung.</div>';
       })
       .catch(function(){ f.submit(); });
